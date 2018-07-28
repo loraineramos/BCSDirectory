@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  employeedirectoryservice:
+    image: ${DOCKER_REGISTRY}employeedirectoryservice
+    build:
+      context: .
+      dockerfile: EmployeeDirectoryService\Dockerfile
