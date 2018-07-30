@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EmployeeDirectoryProcessor\EmployeeDirectoryProcessor.Data\EmployeeDirectoryProcessor.Data.csproj" />
-    <ProjectReference Include="..\EmployeeDirectoryProcessor\EmployeeDirectoryProcessor.Model\EmployeeDirectoryProcessor.Model.csproj" />
+    <ProjectReference Include="..\EmployeeDirectoryProcessor.Data\EmployeeDirectoryProcessor.Data.csproj" />
+    <ProjectReference Include="..\EmployeeDirectoryProcessor.Model\EmployeeDirectoryProcessor.Model.csproj" />
   </ItemGroup>
 
 </Project>
