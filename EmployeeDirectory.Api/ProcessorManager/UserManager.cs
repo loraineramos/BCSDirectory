@@ -77,40 +77,45 @@ namespace EmployeeDirectoryServices.ProcessorManager
             }
         }
 
-        public async Task<List<UserModel>> GetAllUsers()
+        public async Task<IEnumerable<UserModel>> GetAllUsers()
         {
-            var userList = _context.Users.ToList();
-            List <UserModel> userListModel = null;
-            if (userList.Count > 0 && userList != null)
+            try
             {
-                foreach (var user in userList)
+                var userList = _context.Users.ToList();
+                List<UserModel> userListModel = new List<UserModel>();
+                if (userList.Count > 0 && userList != null)
                 {
-                    UserModel userModel = new UserModel()
+                    foreach (var user in userList)
                     {
-                        Id = user.Id,
-                        Address1 = user.Address1,
-                        Age = user.Age,
-                        Birthday = user.Birthday,
-                        CivilStatus = user.CivilStatus,
-                        ContactNumber = user.ContactNumber,
-                        Country = user.Country,
-                        Department = user.Department,
-                        FirstName = user.FirstName,
-                        Gender = user.Gender,
-                        HireDate = user.HireDate,
-                        HobbiesAndInterest = user.HobbiesAndInterest,
-                        LanguagesSpoken = user.LanguagesSpoken,
-                        LastName = user.LastName,
-                        Password = user.Password,
-                        PasswordAttemptFail = user.PasswordAttemptFail,
-                        State = user.State,
-                        UserName = user.UserName,
-                        UserType = UserManagerHelper.GetUserType(user.UserType)
-                    };
-                     userListModel.Add(userModel);
+                        UserModel userModel = new UserModel()
+                        {
+                            Address1 = user.Address1,
+                            Age = user.Age,
+                            Birthday = user.Birthday,
+                            CivilStatus = user.CivilStatus,
+                            ContactNumber = user.ContactNumber,
+                            Country = user.Country,
+                            Department = user.Department,
+                            FirstName = user.FirstName,
+                            Gender = user.Gender,
+                            HireDate = user.HireDate,
+                            HobbiesAndInterest = user.HobbiesAndInterest,
+                            LanguagesSpoken = user.LanguagesSpoken,
+                            LastName = user.LastName,
+                            Password = user.Password,
+                            State = user.State,
+                            UserName = user.UserName
+                        };
+                        userListModel.Add(userModel);
+                    }
                 }
+                return userListModel;
             }
-            return userListModel;
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<UserModel> GetUser(string userName)
@@ -158,7 +163,7 @@ namespace EmployeeDirectoryServices.ProcessorManager
             }
         }
 
-        public async Task<List<UserModel>> GetUserByUserType(UserType userType)
+        public async Task<IEnumerable<UserModel>> GetUserByUserType(UserType userType)
         {
             var users = _context.Users.Where(w => w.UserType == userType.ToString()).ToList();
             List<UserModel> userListModel = null;

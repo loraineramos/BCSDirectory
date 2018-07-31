@@ -11,8 +11,8 @@ namespace EmployeeDirectory.Api.Interfaces
     {
         Task<bool> CreateUser(UserModel user);
         Task<UserModel> GetUser(string userName);
-        Task<List<UserModel>> GetUserByUserType(UserType userType);
-        Task<List<UserModel>> GetAllUsers();
+        Task<IEnumerable<UserModel>> GetUserByUserType(UserType userType);
+        Task<IEnumerable<UserModel>> GetAllUsers();
         Task<bool> UpdateUser(UserModel user);
         Task<bool> DeleteUser(string userName);
 

@@ -2,6 +2,7 @@
 using EmployeeDirectory.Web.Interfaces;
 using EmployeeDirectoryProcessor.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeDirectory.Web.Services
 {
-   
+
     public class EmployeeDirectoyWebAppService : IEmployeeDirectoyWebAppService
     {
         private ServiceRepository _serviceRepository;
@@ -50,19 +51,18 @@ namespace EmployeeDirectory.Web.Services
             }
         }
 
-        public async Task<List<UserModel>> GetAllUsers()
+        public async Task<IEnumerable<UserModel>> GetAllUsers()
         {
-            List<UserModel> userModels;
             try
             {
                 var response = _serviceRepository.GetResponse("api/user");
                 if (!response.IsSuccessStatusCode)
                     return new List<UserModel>();
-                
-                var responseData = await response.Content.ReadAsStringAsync();
-                userModels = JsonConvert.DeserializeObject<List<UserModel>>(responseData);
 
-                return userModels;
+                var responseData = await response.Content.ReadAsStringAsync();
+                var userModels = JsonConvert.SerializeObject(responseData, Formatting.Indented);
+                IEnumerable<UserModel> res = JsonConvert.DeserializeObject<IEnumerable<UserModel>>(userModels);
+                return res;
 
             }
             catch (Exception ex)
@@ -77,7 +77,7 @@ namespace EmployeeDirectory.Web.Services
             UserModel userModel;
             try
             {
-                var response = _serviceRepository.GetResponse("api/user/username/" + userName);
+                var response = _serviceRepository.GetResponse("api/user/" + userName);
                 if (!response.IsSuccessStatusCode)
                     return new UserModel();
 
@@ -93,7 +93,7 @@ namespace EmployeeDirectory.Web.Services
             }
         }
 
-        public async Task<List<UserModel>> GetUserByUserType(UserType userType)
+        public async Task<IEnumerable<UserModel>> GetUserByUserType(UserType userType)
         {
             List<UserModel> userModels;
             try
@@ -144,5 +144,6 @@ namespace EmployeeDirectory.Web.Services
                 throw;
             }
         }
+
     }
 }

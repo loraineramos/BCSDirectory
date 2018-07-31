@@ -10,8 +10,8 @@ namespace EmployeeDirectory.Web.Interfaces
     {
         bool CreateUser(UserModel user);
         Task<UserModel> GetUser(string userName);
-        Task<List<UserModel>> GetUserByUserType(UserType userType);
-        Task<List<UserModel>> GetAllUsers();
+        Task<IEnumerable<UserModel>> GetUserByUserType(UserType userType);
+        Task<IEnumerable<UserModel>> GetAllUsers();
         bool UpdateUser(UserModel user);
         bool DeleteUser(string userName);
         bool ValidateLogin(string userName, string password);
